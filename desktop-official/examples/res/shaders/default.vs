@@ -1,9 +1,7 @@
-#version 330
+attribute vec3 inColor;
+attribute vec3 inPosition;
 
-in vec3 inColor;
-in vec3 inPosition;
-
-out vec3 color;
+varying vec3 color;
 
 void main()
 {

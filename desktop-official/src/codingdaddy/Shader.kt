@@ -3,8 +3,10 @@ package codingdaddy
 import com.jogamp.opengl.GL2
 import java.io.InputStream
 import java.nio.ByteBuffer
+import java.nio.CharBuffer
 import java.nio.IntBuffer
 import java.util.*
+import java.nio.charset.Charset
 
 class ShaderProgram {
 
@@ -23,6 +25,9 @@ class ShaderProgram {
         try {
             val vertexShaderCode: String = ShaderUtils.loadResource(vertexShader)
             val fragmentShaderCode: String = ShaderUtils.loadResource(fragmentShader)
+            println(vertexShaderCode)
+            println(fragmentShaderCode)
+
             programId = gl2.glCreateProgram()
             vertexShaderId = ShaderUtils.createShader(gl2, programId, vertexShaderCode, GL2.GL_VERTEX_SHADER)
             fragmentShaderId = ShaderUtils.createShader(gl2, programId, fragmentShaderCode, GL2.GL_FRAGMENT_SHADER)
@@ -76,7 +81,8 @@ object ShaderUtils {
             if (size > 0) {
                 val byteBuffer = ByteBuffer.allocate(size)
                 gl2.glGetShaderInfoLog(shaderId, size, intBuffer, byteBuffer)
-                println(byteBuffer.toString())
+                val cb: CharBuffer = Charset.forName("UTF-8").decode(byteBuffer)
+                println("error: ${String(Charset.forName("UTF-8").encode(cb).array())}")
             }
             error("Error compiling shader!")
         }
