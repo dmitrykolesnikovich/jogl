@@ -1,7 +1,0 @@
-artifact "jogl:desktop-official-examples"
-
-source {
-    include project(":jogl:desktop-official")
-}
-
-example("default")

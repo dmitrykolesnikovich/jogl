@@ -60,7 +60,7 @@ void artifact(String artifactId, File artifactDir) {
     ProjectDescriptor project = project(projectPath)
     project.projectDir = artifactDir
     project.buildFileName = buildFile.name
-    // println("include $projectPath")
+    println("include $projectPath")
 }
 
 File directory(String artifactPath) {

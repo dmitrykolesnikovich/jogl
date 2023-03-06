@@ -1,9 +1,11 @@
-package jogl.desktop.official.examples
+package jogl.desktop.examples
 
 import codingdaddy.*
 import com.jogamp.common.nio.Buffers
 import com.jogamp.opengl.*
 import com.jogamp.opengl.awt.GLJPanel
+import codingdaddy.Cube
+import codingdaddy.ShaderProgram
 import java.io.InputStream
 import java.nio.FloatBuffer
 import java.nio.IntBuffer

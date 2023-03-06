@@ -1,4 +1,4 @@
-artifact "jogl:desktop-official"
+artifact "jogl:desktop-examples"
 
 source {
     include "org.jogamp.gluegen:gluegen:2.4.0"
@@ -10,3 +10,5 @@ source {
     include "org.jogamp.jogl:jogl-all:2.4.0:natives-windows-amd64"
     include "org.jogamp.jogl:jogl-all:2.4.0:natives-macosx-universal"
 }
+
+example("default")
