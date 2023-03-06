@@ -25,9 +25,6 @@ class ShaderProgram {
         try {
             val vertexShaderCode: String = ShaderUtils.loadResource(vertexShader)
             val fragmentShaderCode: String = ShaderUtils.loadResource(fragmentShader)
-            println(vertexShaderCode)
-            println(fragmentShaderCode)
-
             programId = gl2.glCreateProgram()
             vertexShaderId = ShaderUtils.createShader(gl2, programId, vertexShaderCode, GL2.GL_VERTEX_SHADER)
             fragmentShaderId = ShaderUtils.createShader(gl2, programId, fragmentShaderCode, GL2.GL_FRAGMENT_SHADER)
