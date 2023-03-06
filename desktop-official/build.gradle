@@ -9,13 +9,4 @@ source {
     include "org.jogamp.jogl:jogl-all:2.4.0"
     include "org.jogamp.jogl:jogl-all:2.4.0:natives-windows-amd64"
     include "org.jogamp.jogl:jogl-all:2.4.0:natives-macosx-universal"
-    include "org.jogamp.jogl:nativewindow:2.4.0"
-    include "org.jogamp.jogl:newt:2.4.0"
-    include "org.jogamp.joal:joal:2.4.0"
-    include "org.simpleframework:simple-xml:2.7.1"
-    include files("${rootProject.projectDir}/libs/jogamp-all-platforms/jar/atomic/jogl-cg.jar")
-    include files("${rootProject.projectDir}/libs/jogamp-all-platforms/jar/atomic/jogl-cg-natives-windows-amd64.jar")
-    include files("${rootProject.projectDir}/libs/jogamp-all-platforms/jar/atomic/jogl-cg-natives-macosx-universal")
-    include files("${rootProject.projectDir}/libs/jogamp-all-platforms/jar/atomic/jogl-glu.jar")
-    include files("${rootProject.projectDir}/libs/jogamp-all-platforms/jar/atomic/jogl-glu-gldesktop.jar")
 }
