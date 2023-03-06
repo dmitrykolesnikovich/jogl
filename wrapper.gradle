@@ -1,0 +1,70 @@
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+settings.ext.project = { String projectName, Closure projectPath -> project(projectName, projectPath()) }
+
+settings.ext.module = { String artifactId, Closure artifactPath -> module(artifactId, artifactPath()) }
+
+settings.ext.plugin = { String pluginPath -> includeBuild("$root/$pluginPath") }
+
+/*internals*/
+
+void project(String mavenGroup, String projectPath) {
+    root = projectPath
+    apply from: "$projectPath/project.gradle"
+    root = "."
+}
+
+void module(String artifactId, String artifactPath) {
+    // accept
+    File artifactDir = directory(artifactPath)
+    if (!artifactDir.exists()) return
+
+    // featurea artifact
+    artifact(artifactId, artifactDir)
+
+    // examples module
+    module("$artifactId-examples", "$artifactPath/examples")
+
+    // example artifacts
+    Pattern pattern = Pattern.compile(/example\("(\w*)"/)
+    BufferedReader reader = new BufferedReader(new FileReader(new File(artifactDir, "build.gradle")))
+    String line
+    while ((line = reader.readLine()) != null) {
+        Matcher matcher = pattern.matcher(line)
+        Collection<Collection<String>> matches = matcher.findAll()
+        if (matches.size() != 0) {
+            String exampleName = matches[0][1]
+            String exampleSpecifier = "$exampleName-example"
+            String exampleId = artifactId.endsWith("examples") ? "${artifactId.replace("examples", "")}$exampleSpecifier" : "$artifactId-$exampleSpecifier"
+            artifact(exampleId, artifactDir)
+        }
+    }
+
+    // assemble artifacts
+    String assembleName = (artifactDir.name == "examples" && artifactId != "examples") ? "${artifactDir.parentFile.name}-examples" : artifactDir.name
+    artifact("$artifactId-android", new File(artifactDir, "assemble/$assembleName-android"))
+    artifact("$artifactId-desktop", new File(artifactDir, "assemble/$assembleName-desktop"))
+    artifact("$artifactId-ios", new File(artifactDir, "assemble/$assembleName-ios"))
+    artifact("$artifactId-js", new File(artifactDir, "assemble/$assembleName-js"))
+}
+
+void artifact(String artifactId, File artifactDir) {
+    // accept
+    File buildFile = new File(artifactDir, "build.gradle")
+    if (!buildFile.exists()) return
+
+    // gradle project
+    String projectPath = ":$artifactId"
+    include(projectPath)
+    ProjectDescriptor project = project(projectPath)
+    project.projectDir = artifactDir
+    project.buildFileName = buildFile.name
+    // println("include $projectPath")
+}
+
+File directory(String artifactPath) {
+    return new File(rootProject.projectDir, "$root/$artifactPath")
+}
+
+settings.ext.root = "."
