@@ -203,6 +203,7 @@ class HelloTriangleSimple : GLEventListener, KeyListener {
     }
 
     override fun keyReleased(e: KeyEvent) {}
+
     private inner class Program internal constructor(gl: GL3) {
         var name: Int
         var modelToWorldMatUL: Int

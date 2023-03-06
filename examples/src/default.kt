@@ -4,14 +4,13 @@ import codingdaddy.*
 import com.jogamp.common.nio.Buffers
 import com.jogamp.opengl.*
 import com.jogamp.opengl.awt.GLJPanel
-import codingdaddy.Cube
-import codingdaddy.ShaderProgram
 import java.io.InputStream
 import java.nio.FloatBuffer
 import java.nio.IntBuffer
 import java.util.*
 import javax.swing.JFrame
 import javax.swing.SwingUtilities
+
 
 fun default() {
     class Renderer : GLEventListener {
@@ -47,7 +46,7 @@ fun default() {
             val gl: GL2ES2 = glAutoDrawable.gl.gL2ES2
             val colorLocation: Int = shaderProgram.locationOf("inColor")
             val positionLocation: Int = shaderProgram.locationOf("inPosition")
-            gl.glClearColor(0.2f, 0.3f, 0.4f, 1.0f)
+            gl.glClearColor(0.4f, 0.3f, 0.2f, 1.0f)
             gl.glClear(GL2ES2.GL_COLOR_BUFFER_BIT or GL2ES2.GL_DEPTH_BUFFER_BIT)
             /*gl.glUseProgram(shaderProgram.programId)
             gl.glEnableVertexAttribArray(positionLocation)
@@ -67,8 +66,10 @@ fun default() {
 
     }
 
-    val glProfile: GLProfile = GLProfile.get(GLProfile.GL2ES2)    
+    val glProfile = GLProfile.getGL4ES3()
     val glCapabilities: GLCapabilities = GLCapabilities(glProfile)
+    glCapabilities.depthBits = 24
+
     SwingUtilities.invokeLater {
         val frame: JFrame = JFrame("Cube Example")
         frame.setSize(640, 480)
